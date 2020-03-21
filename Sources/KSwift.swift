@@ -8,6 +8,7 @@ extension Array {
 
 extension Collection {
     var isNotEmpty: Bool { !isEmpty }
+    var secondLast: Element? { dropLast().last }
 }
 
 extension String {
