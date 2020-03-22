@@ -10,3 +10,10 @@ extension Collection {
     var isNotEmpty: Bool { !isEmpty }
     var secondLast: Element? { dropLast().last }
 }
+
+extension Substring {
+    /// Can be used to convert SubString to String
+    var toString: String {
+        String(self)
+    }
+}
