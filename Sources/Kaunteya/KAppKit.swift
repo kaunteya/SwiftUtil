@@ -19,12 +19,14 @@ extension NSMenuItem {
         action selector: Selector? = nil,
         keyEquivalent charCode: String = "",
         target: AnyObject? = nil,
+        representedObject: Any? = nil,
         submenu: NSMenu? = nil
         ) {
         self.init(title: string, action: selector, keyEquivalent: charCode)
         self.image = image
         self.target = target
         self.submenu = submenu
+        self.representedObject = representedObject
     }
 }
 
