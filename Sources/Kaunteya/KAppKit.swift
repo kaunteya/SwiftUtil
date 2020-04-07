@@ -156,6 +156,16 @@ extension NSTextView {
     var selectedText: String {
         String(string[selectedRange()])
     }
+
+    func wrapText(_ isWrapped: Bool) {
+        guard let scrollView = enclosingScrollView else { return }
+        scrollView.hasHorizontalScroller = !isWrapped
+        isHorizontallyResizable = !isWrapped
+        let width = isWrapped ? Int(scrollView.contentSize.width) : Int.max
+        maxSize = NSSize(width: width, height: Int.max)
+        textContainer?.size = NSSize(width: width, height: Int.max)
+        textContainer?.widthTracksTextView = isWrapped
+    }
 }
 
 extension NSWindow {
