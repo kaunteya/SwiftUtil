@@ -19,20 +19,24 @@ extension NSMenuItem {
         action selector: Selector? = nil,
         keyEquivalent charCode: String = "",
         target: AnyObject? = nil,
+        representedObject: Any? = nil,
         submenu: NSMenu? = nil
         ) {
         self.init(title: string, action: selector, keyEquivalent: charCode)
         self.image = image
         self.target = target
         self.submenu = submenu
+        self.representedObject = representedObject
     }
 }
 
 extension NSMenu {
-    func add(_ title: String, action: Selector? = nil, keyEquivalent char: String = "", target: AnyObject? = nil, submenu: NSMenu? = nil) {
+    @discardableResult
+    func add(_ title: String, action: Selector? = nil, keyEquivalent char: String = "", target: AnyObject? = nil, submenu: NSMenu? = nil) -> NSMenuItem {
         let item = addItem(withTitle: title, action: action, keyEquivalent: char)
         item.target = target
         item.submenu = submenu
+        return item
     }
 
     func add(_ item: NSMenuItem) {
@@ -172,5 +176,21 @@ extension NSWindow {
         buttons.forEach {
             standardWindowButton($0)?.removeFromSuperview()
         }
+    }
+}
+
+extension NSImage {
+    func tint(_ color: NSColor) -> NSImage {
+        let image = self.copy() as! NSImage
+        image.lockFocus()
+
+        color.set()
+
+        let imageRect = NSRect(origin: NSZeroPoint, size: image.size)
+        imageRect.fill(using: .sourceAtop)
+
+        image.unlockFocus()
+
+        return image
     }
 }
