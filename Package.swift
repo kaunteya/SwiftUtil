@@ -6,13 +6,13 @@ import PackageDescription
 let package = Package(
     name: "Kaunteya",
     platforms: [
-        .macOS(.v10_14),
+        .macOS(.v10_14)
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "Kaunteya",
-            targets: ["Kaunteya"]),
+            targets: ["Kaunteya"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -26,6 +26,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "KaunteyaTests",
-            dependencies: ["Kaunteya"]),
+            dependencies: ["Kaunteya"])
     ]
 )

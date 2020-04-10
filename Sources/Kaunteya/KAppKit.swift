@@ -137,7 +137,6 @@ class HStack: NSStackView {
     }
 }
 
-
 extension NSTextView {
     var contentSize: CGSize {
         guard let layoutManager = layoutManager, let textContainer = textContainer else {
