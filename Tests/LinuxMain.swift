@@ -1,7 +1,7 @@
 import XCTest
 
-import KaunteyaTests
+import SwiftUtilTests
 
 var tests = [XCTestCaseEntry]()
-tests += KaunteyaTests.allTests()
+tests += SwiftUtilTests.allTests()
 XCTMain(tests)

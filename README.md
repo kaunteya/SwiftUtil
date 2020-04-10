@@ -1,3 +1,3 @@
-# Kaunteya
+# SwiftUtil
 
 A description of this package.

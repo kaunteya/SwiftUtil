@@ -1,5 +1,5 @@
 import Cocoa
-extension NSView {
+public extension NSView {
     // Avoid using isHidden on NSView. Use an enum instead
     enum Visibility { case visible, hidden }
     var visiblity: Visibility {
@@ -12,7 +12,7 @@ extension NSView {
     }
 }
 
-extension NSMenuItem {
+public extension NSMenuItem {
     convenience init(
         _ string: String = "",
         image: NSImage? = nil,
@@ -30,7 +30,7 @@ extension NSMenuItem {
     }
 }
 
-extension NSMenu {
+public extension NSMenu {
     @discardableResult
     func add(_ title: String, action: Selector? = nil, keyEquivalent char: String = "", target: AnyObject? = nil, submenu: NSMenu? = nil) -> NSMenuItem {
         let item = addItem(withTitle: title, action: action, keyEquivalent: char)
@@ -48,7 +48,7 @@ extension NSMenu {
     }
 }
 
-extension NSColor {
+public extension NSColor {
     convenience init(hex: Int, alpha: CGFloat = 1) {
         let red = CGFloat((hex & 0xFF0000) >> 16) / 255.0
         let green = CGFloat((hex & 0xFF00) >> 8) / 255.0
@@ -57,14 +57,14 @@ extension NSColor {
     }
 }
 
-extension NSMutableParagraphStyle {
+public extension NSMutableParagraphStyle {
     convenience init(lineSpacing: CGFloat) {
         self.init()
         self.lineSpacing = lineSpacing
     }
 }
 
-extension NSStoryboard {
+public extension NSStoryboard {
     static var main: NSStoryboard {
         return NSStoryboard(name: "Main", bundle: nil)
     }
@@ -78,7 +78,7 @@ extension NSStoryboard {
     }
 }
 
-extension NSSplitView {
+public extension NSSplitView {
     // TODO: Get rid of this. Find alternatives
     var dividerView: NSView {
         let view = subviews.first { $0.className == "NSSplitDividerView" }
@@ -92,7 +92,7 @@ extension NSSplitView {
     }
 }
 
-extension NSStackView {
+public extension NSStackView {
     func removeAllArrangedViews() {
         arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
@@ -118,7 +118,7 @@ extension NSStackView {
     }
 }
 
-class VStack: NSStackView {
+public class VStack: NSStackView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.orientation = .vertical
@@ -130,7 +130,7 @@ class VStack: NSStackView {
     }
 }
 
-class HStack: NSStackView {
+public class HStack: NSStackView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.orientation = .horizontal
@@ -141,7 +141,7 @@ class HStack: NSStackView {
     }
 }
 
-extension NSTextView {
+public extension NSTextView {
     var contentSize: CGSize {
         guard let layoutManager = layoutManager, let textContainer = textContainer else {
             print("textView no layoutManager or textContainer")
@@ -171,7 +171,7 @@ extension NSTextView {
     }
 }
 
-extension NSWindow {
+public extension NSWindow {
     func removeStandardButtons(buttons: [NSWindow.ButtonType]) {
         buttons.forEach {
             standardWindowButton($0)?.removeFromSuperview()
@@ -179,7 +179,7 @@ extension NSWindow {
     }
 }
 
-extension NSImage {
+public extension NSImage {
     func tint(_ color: NSColor) -> NSImage {
         let image = self.copy() as! NSImage
         image.lockFocus()
