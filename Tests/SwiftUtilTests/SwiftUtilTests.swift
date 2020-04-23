@@ -2,13 +2,8 @@ import XCTest
 @testable import SwiftUtil
 
 final class SwiftUtilTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
+    func testStringsentenceCase() {
+        XCTAssertEqual("noteWillBeSaved".sentenceCase, "Note Will Be Saved")
+        XCTAssertEqual("note".sentenceCase, "Note")
     }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }
