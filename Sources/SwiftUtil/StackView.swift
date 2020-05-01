@@ -24,6 +24,11 @@ public extension NSStackView {
         self.distribution = val
         return self
     }
+
+    func setArrangedSubViews(_ views: [NSView]) {
+        removeAllArrangedViews()
+        views.forEach(addArrangedSubview)
+    }
 }
 
 public class VStack: NSStackView {
