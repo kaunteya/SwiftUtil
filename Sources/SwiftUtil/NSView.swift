@@ -12,11 +12,13 @@ public extension NSView {
         }
     }
 
+    @discardableResult
     func hidden() -> Self {
         isHidden = true
         return self
     }
 
+    @discardableResult
     func wantsLayer() -> Self {
         wantsLayer = true
         return self
