@@ -28,4 +28,24 @@ public extension NSTextField {
     func selectable(_ a: Bool) -> Self {
         isSelectable = a; return self
     }
+
+    func font(_ a: NSFont) -> Self {
+        font = a; return self
+    }
+
+    func fontSize(_ a: CGFloat) -> Self {
+        var f = font
+        if let name = f?.familyName {
+            font = NSFont(name: name, size: a)
+        }
+        return self
+    }
+
+    func maxLines(_ a: Int) -> Self {
+        maximumNumberOfLines = a; return self
+    }
+
+    func lineBreakingMode(_ a: NSLineBreakMode) -> Self {
+        lineBreakMode = a; return self
+    }
 }
