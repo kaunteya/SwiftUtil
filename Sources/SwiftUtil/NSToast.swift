@@ -33,9 +33,6 @@ public final class NSToast: NSView {
         wantsLayer = true
         widthAnchor.constraint(greaterThanOrEqualToConstant: Self.minWidth).isActive = true
         self.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-//        self.layer?.borderWidth = 0.5
-//        self.layer?.borderColor = type.color.cgColor
-//        self.layer?.cornerRadius = 3.0
 
         let messageTypeIndicatorBar = NSView(frame: .zero)
         messageTypeIndicatorBar.wantsLayer = true
@@ -65,19 +62,11 @@ public final class NSToast: NSView {
             detTextField.preferredMaxLayoutWidth = Self.maxWidth
             detTextField.cell?.isScrollable = false
             stack.addArrangedSubview(detTextField)
-            detTextField.translatesAutoresizingMaskIntoConstraints = false
-            detTextField.leadingAnchor.constraint(equalTo: stack.leadingAnchor).isActive = true
-            detTextField.trailingAnchor.constraint(equalTo: stack.trailingAnchor).isActive = true
+            detTextField.setConstraints(left: 0, right: 0)
         }
 
         addSubview(stack)
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -22),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            stack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10)
-        ])
+        stack.setConstraints(left: 10, top: 5, right: -22, bottom: -5)
 
         if let primaryButtonString = primaryAction, primaryButtonString.isEmpty == false {
             let button = NSButton(title: primaryButtonString, target: self, action: #selector(primaryButtonTap(_:)))
@@ -96,11 +85,7 @@ public final class NSToast: NSView {
         closeButton.bezelStyle = .regularSquare
         closeButton.isTransparent = true
         addSubview(closeButton)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 3).isActive = true
-        closeButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -3).isActive = true
-        closeButton.widthAnchor.constraint(equalToConstant: 13).isActive = true
-        closeButton.heightAnchor.constraint(equalToConstant: 13).isActive = true
+        closeButton.setConstraints(top: 3, right: -3, width: 13, height: 13)
     }
 
     required init?(coder decoder: NSCoder) {
