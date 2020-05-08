@@ -34,7 +34,7 @@ public extension NSTextField {
     }
 
     func fontSize(_ a: CGFloat) -> Self {
-        var f = font
+        let f = font
         if let name = f?.familyName {
             font = NSFont(name: name, size: a)
         }

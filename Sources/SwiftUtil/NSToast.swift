@@ -32,19 +32,12 @@ public final class NSToast: NSView {
         super.init(frame: .zero)
         wantsLayer = true
         widthAnchor.constraint(greaterThanOrEqualToConstant: Self.minWidth).isActive = true
-        self.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+        self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 
         let messageTypeIndicatorBar = NSView(frame: .zero)
         messageTypeIndicatorBar.wantsLayer = true
         messageTypeIndicatorBar.layer?.backgroundColor = type.color.cgColor
-        self.addSubview(messageTypeIndicatorBar)
-        messageTypeIndicatorBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            messageTypeIndicatorBar.topAnchor.constraint(equalTo: topAnchor, constant: 2),
-            messageTypeIndicatorBar.leftAnchor.constraint(equalTo: leftAnchor, constant: 1),
-            messageTypeIndicatorBar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2),
-            messageTypeIndicatorBar.widthAnchor.constraint(equalToConstant: 2)
-        ])
+        self.addSubview(messageTypeIndicatorBar) { $0.top(1).left(1).bottom(-1).width(1)}
 
         let titleLabel = NSTextField(labelWithString: title)
         let stack = NSStackView(views: [titleLabel])
@@ -61,12 +54,10 @@ public final class NSToast: NSView {
 
             detTextField.preferredMaxLayoutWidth = Self.maxWidth
             detTextField.cell?.isScrollable = false
-            stack.addArrangedSubview(detTextField)
-            detTextField.setConstraints(left: 0, right: 0)
+            stack.addArrangedSubview(detTextField) { $0.left(0).right(0)}
         }
 
-        addSubview(stack)
-        stack.setConstraints(left: 10, top: 5, right: -22, bottom: -5)
+        addSubview(stack) { $0.left(10).top(5).right(-22).bottom(-5)}
 
         if let primaryButtonString = primaryAction, primaryButtonString.isEmpty == false {
             let button = NSButton(title: primaryButtonString, target: self, action: #selector(primaryButtonTap(_:)))
@@ -84,8 +75,7 @@ public final class NSToast: NSView {
         closeButton = NSButton(image: NSImage(named: NSImage.stopProgressTemplateName)!, target: self, action: #selector(self.closeButtonTap))
         closeButton.bezelStyle = .regularSquare
         closeButton.isTransparent = true
-        addSubview(closeButton)
-        closeButton.setConstraints(top: 3, right: -3, width: 13, height: 13)
+        addSubview(closeButton) { $0.top(3).right(-3).size(13)}
     }
 
     required init?(coder decoder: NSCoder) {
