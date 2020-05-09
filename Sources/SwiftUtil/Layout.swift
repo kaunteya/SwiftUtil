@@ -59,6 +59,7 @@ public class Layout {
 
 public extension NSView {
     func applyConstraints(layout: Layout) {
+        assert(translatesAutoresizingMaskIntoConstraints == false)
         NSLayoutConstraint.activate(layout.constraints)
     }
 
