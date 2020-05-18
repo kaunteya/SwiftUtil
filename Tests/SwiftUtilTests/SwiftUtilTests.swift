@@ -17,6 +17,11 @@ final class SwiftUtilTests: XCTestCase {
         XCTAssertEqual(99.clamped(to: 50...100), 99)
         XCTAssertEqual(100.clamped(to: 50...100), 100)
         XCTAssertEqual(101.clamped(to: 50...100), 100)
+    }
 
+    func testDateFormatting() {
+        let date = Date(timeIntervalSince1970: 1589822634)
+        XCTAssertEqual(date.string(DateFormatter("d MMM yyyy")), "18 May 2020")
+        XCTAssertEqual(date.string(format: "d MM yyyy"), "18 05 2020")
     }
 }
