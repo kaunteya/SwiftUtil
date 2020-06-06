@@ -24,4 +24,9 @@ final class SwiftUtilTests: XCTestCase {
         XCTAssertEqual(date.string(DateFormatter("d MMM yyyy")), "18 May 2020")
         XCTAssertEqual(date.string(format: "d MM yyyy"), "18 05 2020")
     }
+
+    func testStringisEmpty() {
+        XCTAssertEqual("kaunteya".ifEmpty("Nana"), "kaunteya")
+        XCTAssertEqual("".ifEmpty("Nana"), "Nana")
+    }
 }

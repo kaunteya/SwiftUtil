@@ -16,4 +16,9 @@ public extension String {
             res.append(char)
         }.capitalized
     }
+
+    /// Alternate string if the source string is empty
+    func ifEmpty(_ str: String) -> String {
+        self.isNotEmpty ? self : str
+    }
 }
