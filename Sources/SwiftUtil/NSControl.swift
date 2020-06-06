@@ -47,6 +47,10 @@ public extension NSControl {
 }
 
 public extension NSControl.StateValue {
+    var isOn: Bool { self == .on }
+
+    var isOff: Bool { self == .off }
+
     mutating func toggle() {
         self = (self == .on) ? .off : .on
     }

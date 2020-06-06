@@ -12,6 +12,10 @@ public extension NSView {
         }
     }
 
+    func toggleVisibility() {
+        isHidden = !isHidden
+    }
+
     @discardableResult
     func hidden() -> Self {
         isHidden = true
