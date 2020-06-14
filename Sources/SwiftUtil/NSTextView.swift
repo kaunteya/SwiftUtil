@@ -19,13 +19,30 @@ public extension NSTextView {
         String(string[selectedRange()])
     }
 
-    func wrapText(_ isWrapped: Bool) {
-        guard let scrollView = enclosingScrollView else { return }
-        scrollView.hasHorizontalScroller = !isWrapped
-        isHorizontallyResizable = !isWrapped
-        let width = isWrapped ? Int(scrollView.contentSize.width) : Int.max
-        maxSize = NSSize(width: width, height: Int.max)
-        textContainer?.size = NSSize(width: width, height: Int.max)
-        textContainer?.widthTracksTextView = isWrapped
+    var wrapsLines: Bool {
+        get {
+            return self.textContainer?.widthTracksTextView ?? false
+        }
+        set {
+            guard
+                newValue != self.wrapsLines,
+                let scrollView = enclosingScrollView,
+                let textContainer = self.textContainer
+                else { return }
+
+            scrollView.hasHorizontalScroller = !newValue
+            isHorizontallyResizable = !newValue
+            textContainer.widthTracksTextView = newValue
+
+            if newValue {
+                self.frame.size[keyPath: \NSSize.width] = scrollView.contentSize.width
+                maxSize = NSSize(width: scrollView.contentSize.width, height: CGFloat.greatestFiniteMagnitude)
+                textContainer.size.width = scrollView.contentSize.width
+            } else {
+                let infiniteSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+                maxSize = infiniteSize
+                textContainer.size = infiniteSize
+            }
+        }
     }
 }
