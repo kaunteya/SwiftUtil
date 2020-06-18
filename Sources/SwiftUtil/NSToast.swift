@@ -15,15 +15,9 @@ public final class NSToast: NSView {
     public static var detailViewMaxHeight: CGFloat = 100
     public static var maxLinesInDetailView = 5
     private static var viewStack = NSStackView()
+    private static var overlayView = NSView()
     public static var defaultExpiryTime: Expiry = .timed(4)
     public static var contentView = NSApplication.shared.mainWindow?.contentView
-    public static var location: Location = .bottomRight {
-        didSet {
-            addButtonStackToContentView()
-            let constraints = constraintsForLocation(location)
-            NSLayoutConstraint.activate(constraints)
-        }
-    }
 
     private var closeButton: NSButton!
     var action: (() -> ())?
@@ -115,7 +109,7 @@ public final class NSToast: NSView {
             }
         }
 
-        addButtonStackToContentView()
+        addContainerStackToOverlay()
 
         let toast = NSToast(type: type, title: title, detail: detail?.trimmingCharacters(in: .whitespacesAndNewlines), primaryAction: primaryAction, onAction: onAction, expiry: expiry)
         toast.shadow = NSShadow()
@@ -126,67 +120,13 @@ public final class NSToast: NSView {
         viewStack.addArrangedSubview(toast)
     }
 
-    private static func addButtonStackToContentView() {
-        if viewStack.superview == nil {
-            if let contentView = contentView {
-                contentView.addSubview(viewStack)
-                viewStack.orientation = .vertical
-                viewStack.alignment = .trailing
-                viewStack.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate(constraintsForLocation(self.location))
-            }
-        }
-    }
-
-    private static func constraintsForLocation(_ location: Location) -> [NSLayoutConstraint] {
-        guard viewStack.arrangedSubviews.isEmpty else {
-            print("Location cannot be changed unless stack is empty")
-            return []
-        }
-
-        contentView?.constraints.forEach(contentView!.removeConstraint)
-        switch location {
-        case .bottomLeft:
-            return [
-                viewStack.leftAnchor.constraint(equalTo: contentView!.leftAnchor, constant: 10),
-                viewStack.bottomAnchor.constraint(equalTo: contentView!.bottomAnchor, constant: -10)
-            ]
-
-        case .bottomMiddle:
-            return [
-            viewStack.centerXAnchor.constraint(equalTo: contentView!.centerXAnchor),
-            viewStack.bottomAnchor.constraint(equalTo: contentView!.bottomAnchor, constant: -10)
-                ]
-
-        case .bottomRight:
-            return [
-            viewStack.rightAnchor.constraint(equalTo: contentView!.rightAnchor, constant: -10),
-            viewStack.bottomAnchor.constraint(equalTo: contentView!.bottomAnchor, constant: -10)
-                ]
-
-        case .middle:
-            return [
-            viewStack.centerXAnchor.constraint(equalTo: contentView!.centerXAnchor),
-            viewStack.centerYAnchor.constraint(equalTo: contentView!.centerYAnchor)
-                ]
-
-        case .topLeft:
-            return [
-            viewStack.leftAnchor.constraint(equalTo: contentView!.leftAnchor, constant: 10),
-            viewStack.topAnchor.constraint(equalTo: contentView!.topAnchor, constant: 10)
-                ]
-
-        case .topMiddle:
-            return [
-            viewStack.centerXAnchor.constraint(equalTo: contentView!.centerXAnchor),
-            viewStack.topAnchor.constraint(equalTo: contentView!.topAnchor, constant: 10)
-                ]
-
-        case .topRight:
-            return [
-            viewStack.rightAnchor.constraint(equalTo: contentView!.rightAnchor, constant: -10),
-            viewStack.topAnchor.constraint(equalTo: contentView!.topAnchor, constant: 10)
-                ]
+    private static func addContainerStackToOverlay() {
+        if overlayView.superview == nil {
+            contentView?.addSubview(overlayView, layout: { $0.equalViews() })
+            overlayView.addSubview(viewStack, layout: { $0.right(-10).bottom(-10)})
+            viewStack.orientation = .vertical
+            viewStack.alignment = .trailing
+            viewStack.translatesAutoresizingMaskIntoConstraints = false
         }
     }
 }
