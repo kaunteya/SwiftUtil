@@ -1,6 +1,6 @@
 import AppKit.NSAppearance
 
-extension NSAppearance {
+public extension NSAppearance {
 
     /// if NSAppearance.current.isDark {
     var isDark: Bool {
