@@ -5,8 +5,6 @@ public extension Comparable {
     /// - Parameter range: Condition which receiver should be in between.
     /// - Returns: Processed value.
     func clamped(to range: ClosedRange<Self>) -> Self {
-
-        return max(range.lowerBound, min(self, range.upperBound))
+        max(range.lowerBound, min(self, range.upperBound))
     }
-
 }
