@@ -21,4 +21,8 @@ public extension String {
     func ifEmpty(_ str: String) -> String {
         self.isNotEmpty ? self : str
     }
+
+    var toInt: Int? {
+        Int(self)
+    }
 }
