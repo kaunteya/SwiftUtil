@@ -25,4 +25,21 @@ public extension String {
     var toInt: Int? {
         Int(self)
     }
+
+    func allOccurences(of subString: String, caseSensitive: Bool = true) -> [Int] {
+        let subString = caseSensitive ? subString : subString.lowercased()
+        let mainString = caseSensitive ? self : self.lowercased()
+        var indices = [Int]()
+        var searchStartIndex = mainString.startIndex
+        while searchStartIndex < mainString.endIndex,
+            let range = mainString.range(of: subString, range: searchStartIndex..<self.endIndex),
+            !range.isEmpty
+        {
+            let index = distance(from: mainString.startIndex, to: range.lowerBound)
+            indices.append(index)
+            searchStartIndex = range.upperBound
+        }
+
+        return indices
+    }
 }
