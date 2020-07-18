@@ -62,7 +62,7 @@ public final class NSToast: NSView {
 
         if case Expiry.timed(let time) = expiry {
             Timer.scheduledTimer(withTimeInterval: time, repeats: false) { [weak self] _ in
-                self?.removeFromSuperview()
+                self?.removeFromStack()
             }
         }
         closeButton = NSButton(image: NSImage(named: NSImage.stopProgressTemplateName)!, target: self, action: #selector(self.closeButtonTap))
@@ -77,12 +77,19 @@ public final class NSToast: NSView {
 
 
     @objc private func closeButtonTap(_ sender: NSButton) {
-        removeFromSuperview()
+        removeFromStack()
     }
 
     @objc private func primaryButtonTap(_ sender: NSButton) {
         action?()
+        removeFromStack()
+    }
+
+    private func removeFromStack() {
         removeFromSuperview()
+        if Self.viewStack.arrangedSubviews.isEmpty {
+            Self.viewStack.removeFromSuperview()
+        }
     }
 
     public static func info(_ title: String, detail: String? = nil, primaryAction: String? = nil, onAction: (() -> ())? = nil, uniqueDisplayId: String? = nil, expiry: Expiry = defaultExpiryTime) {
