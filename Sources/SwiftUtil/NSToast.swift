@@ -15,7 +15,6 @@ public final class NSToast: NSView {
     public static var detailViewMaxHeight: CGFloat = 100
     public static var maxLinesInDetailView = 5
     private static var viewStack = NSStackView()
-    private static var overlayView = NSView()
     public static var defaultExpiryTime: Expiry = .timed(4)
     public static var contentView = NSApplication.shared.mainWindow?.contentView
 
@@ -121,9 +120,8 @@ public final class NSToast: NSView {
     }
 
     private static func addContainerStackToOverlay() {
-        if overlayView.superview == nil {
-            contentView?.addSubview(overlayView, layout: { $0.equalViews() })
-            overlayView.addSubview(viewStack, layout: { $0.right(-10).bottom(-10)})
+        if viewStack.superview == nil {
+            contentView?.addSubview(viewStack, layout: { $0.right(-10).bottom(-10)})
             viewStack.orientation = .vertical
             viewStack.alignment = .trailing
             viewStack.translatesAutoresizingMaskIntoConstraints = false
