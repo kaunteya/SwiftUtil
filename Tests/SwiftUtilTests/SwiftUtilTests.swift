@@ -32,6 +32,8 @@ final class SwiftUtilTests: XCTestCase {
 
     func testAllOccurencesOfSubString() {
         let basicString = "Some text is large and some is larger than other"
+        XCTAssertEqual(basicString.allOccurences(of: ""), [])
+        XCTAssertEqual(basicString.allOccurences(of: "asd"), [])
         XCTAssertEqual(basicString.allOccurences(of: "is"), [10, 28])
         XCTAssertEqual(basicString.allOccurences(of: "large"), [13, 31])
         XCTAssertEqual(basicString.allOccurences(of: "larger"), [31])
